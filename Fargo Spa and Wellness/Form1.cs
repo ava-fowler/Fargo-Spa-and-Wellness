@@ -14,6 +14,7 @@ namespace Fargo_Spa_and_Wellness
     {
         public Form1()
         {
+            //initialize the form components
             InitializeComponent();
         }
     }
