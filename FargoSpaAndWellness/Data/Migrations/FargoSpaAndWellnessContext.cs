@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FargoSpaAndWellness.Models;
 
-namespace FargoSpaAndWellness.Data
+namespace FargoSpaAndWellness.Data.Migrations
 {
     public class FargoSpaAndWellnessContext : DbContext
     {
@@ -14,6 +14,11 @@ namespace FargoSpaAndWellness.Data
         {
         }
 
-        public DbSet<FargoSpaAndWellness.Models.Service> Service { get; set; } = default!;
+        public DbSet<Service> Service { get; set; } = default!;
+        public DbSet<Appointment> Appointment { get; set; } = default!;
+        public DbSet<Employee> Employee { get; set; } = default!;
+        public DbSet<Customer> Customer { get; set; } = default!;
+
+
     }
 }

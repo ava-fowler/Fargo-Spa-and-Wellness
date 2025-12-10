@@ -1,10 +1,12 @@
 ﻿@page "/services"
-@using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.QuickGrid
-@using FargoSpaAndWellness.Models
 @using FargoSpaAndWellness.Data
+@using FargoSpaAndWellness.Data.Migrations
+@using FargoSpaAndWellness.Migrations.FargoSpaAndWellness
+@using FargoSpaAndWellness.Models
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Microsoft.EntityFrameworkCore
 @implements IAsyncDisposable
-@inject IDbContextFactory<FargoSpaAndWellness.Data.FargoSpaAndWellnessContext> DbFactory
+@inject IDbContextFactory<FargoSpaAndWellnessContext> DbFactory
 
 <PageTitle>Index</PageTitle>
 
@@ -28,9 +30,9 @@
     <PropertyColumn Property="service => service.IsAvailable" Title = "Available"/>
 
     <TemplateColumn Context="service">
-        <a href="@($"services/edit?serviceid={service.ServiceId}")">Edit</a> |
-        <a href="@($"services/details?serviceid={service.ServiceId}")">Details</a> |
-        <a href="@($"services/delete?serviceid={service.ServiceId}")">Delete</a>
+        <a href="@($"services/edit?serviceid={service.ServiceID}")">Edit</a> |
+        <a href="@($"services/details?serviceid={service.ServiceID}")">Details</a> |
+        <a href="@($"services/delete?serviceid={service.ServiceID}")">Delete</a>
     </TemplateColumn>
 </QuickGrid>
 </div>
