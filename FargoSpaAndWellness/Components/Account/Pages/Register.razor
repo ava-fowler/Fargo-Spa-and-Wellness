@@ -79,6 +79,9 @@
             identityErrors = result.Errors;
             return;
         }
+        // Auto-confirm email
+        user.EmailConfirmed = true;
+        await UserManager.UpdateAsync(user);
 
         Logger.LogInformation("User created a new account with password.");
 
