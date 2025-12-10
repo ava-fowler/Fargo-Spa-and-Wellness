@@ -1,0 +1,115 @@
+﻿@page "/appointments/create"
+@using Microsoft.EntityFrameworkCore
+@using FargoSpaAndWellness.Models
+@inject IDbContextFactory<FargoSpaAndWellness.Data.Migrations.FargoSpaAndWellnessContext> DbFactory
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<h3>💆 Create an Appointment</h3>
+
+<EditForm Model="@newAppointment" OnValidSubmit="@HandleCreateAppointment" FormName="AppointmentForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="serviceSelect">Select Service:</label>
+        <InputSelect id="serviceSelect" class="form-control" @bind-Value="selectedServiceId">
+            <option value="">-- Select Service --</option>
+            @foreach (var service in Services)
+            {
+                <option value="@service.ServiceID">@service.Name (@service.DurationMinutes min)</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="providerSelect">Select Provider:</label>
+        <InputSelect id="providerSelect" class="form-control" @bind-Value="selectedEmployeeId">
+            <option value="">-- Select Provider --</option>
+            @foreach (var employee in Employees)
+            {
+                <option value="@employee.EmpID">@employee.FirstName @employee.LastName (@employee.Position)</option>
+            }
+        </InputSelect>
+    </div>
+
+    <div class="form-group">
+        <label for="dateInput">Appointment date:</label>
+        <InputDate id="dateInput" class="form-control" @bind-Value="appointmentDate" />
+    </div>
+
+    <div class="form-group">
+        <label for="timeInput">Appointment time:</label>
+        <InputText id="timeInput" type="time" class="form-control" @bind-Value="appointmentTimeString" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Create Appointment</button>
+</EditForm>
+
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <p class="text-success mt-2">@successMessage</p>
+}
+
+@code {
+    private FargoSpaAndWellness.Data.Migrations.FargoSpaAndWellnessContext context = default!;
+    private List<Service> Services = new();
+    private List<Employee> Employees = new();
+
+    private int selectedEmployeeId;
+    private int selectedServiceId;
+
+    // Separate date and time inputs
+    private DateTime appointmentDate = DateTime.Today;
+    private string appointmentTimeString = "09:00"; // default 9:00 AM
+
+    private Appointment newAppointment = new();
+    private string? successMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        context = DbFactory.CreateDbContext();
+        Services = await context.Service.ToListAsync();
+        Employees = await context.Employee.ToListAsync(); // load providers
+    }
+
+    private async Task HandleCreateAppointment()
+    {
+        if (TimeSpan.TryParse(appointmentTimeString, out var time))
+        {
+            var startDateTime = appointmentDate.Date.Add(time);
+
+            newAppointment.EmployeeID = selectedEmployeeId;   // <-- use EmployeeID
+            newAppointment.ServiceID = selectedServiceId;
+            newAppointment.AppointmentDate = startDateTime;
+            newAppointment.Status = "Scheduled";
+
+            context.Appointment.Add(newAppointment);
+            await context.SaveChangesAsync();
+
+            successMessage = $"✅ {GetEmployeeName(selectedEmployeeId)} booked for {GetServiceTitle(selectedServiceId)} on {startDateTime:g}.";
+        }
+        else
+        {
+            successMessage = "❌ Invalid time format.";
+        }
+
+        newAppointment = new Appointment();
+        selectedEmployeeId = 0;
+        selectedServiceId = 0;
+        appointmentDate = DateTime.Today;
+        appointmentTimeString = "09:00";
+    }
+
+    private string GetEmployeeName(int id)
+    {
+        var employee = Employees.FirstOrDefault(e => e.EmpID == id);
+        return employee is null ? "Unknown Provider" : $"{employee.FirstName} {employee.LastName}";
+    }
+
+    private string GetServiceTitle(int id)
+    {
+        var service = Services.FirstOrDefault(s => s.ServiceID == id);
+        return service is null ? "Unknown Service" : $"{service.Name}";
+    }
+}

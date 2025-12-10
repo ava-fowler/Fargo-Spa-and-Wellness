@@ -7,7 +7,7 @@ namespace FargoSpaAndWellness.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ServiceId { get; set; }   // Primary Key
+        public int ServiceID { get; set; }   // Primary Key
         [Required]
         [StringLength(100)]
         public string Name { get; set; }     // Service name (e.g., "Swedish Massage")

@@ -1,7 +1,9 @@
 ﻿@page "/services/details"
-@using Microsoft.EntityFrameworkCore
+@using FargoSpaAndWellness.Data.Migrations
+@using FargoSpaAndWellness.Migrations.FargoSpaAndWellness
 @using FargoSpaAndWellness.Models
-@inject IDbContextFactory<FargoSpaAndWellness.Data.FargoSpaAndWellnessContext> DbFactory
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<FargoSpaAndWellnessContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Details</PageTitle>
@@ -31,7 +33,7 @@
             <dd class="col-sm-10">@service.IsAvailable</dd>
         </dl>
         <div>
-            <a href="@($"/services/edit?serviceid={service.ServiceId}")">Edit</a> |
+            <a href="@($"/services/edit?serviceid={service.ServiceID}")">Edit</a> |
             <a href="@($"/services")">Back to List</a>
         </div>
     }
@@ -46,7 +48,7 @@
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        service = await context.Service.FirstOrDefaultAsync(m => m.ServiceId == ServiceId);
+        service = await context.Service.FirstOrDefaultAsync(m => m.ServiceID == ServiceId);
 
         if (service is null)
         {

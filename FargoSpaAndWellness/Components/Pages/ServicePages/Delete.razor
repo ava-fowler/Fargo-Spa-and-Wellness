@@ -1,7 +1,9 @@
 ﻿@page "/services/delete"
-@using Microsoft.EntityFrameworkCore
+@using FargoSpaAndWellness.Data.Migrations
+@using FargoSpaAndWellness.Migrations.FargoSpaAndWellness
 @using FargoSpaAndWellness.Models
-@inject IDbContextFactory<FargoSpaAndWellness.Data.FargoSpaAndWellnessContext> DbFactory
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<FargoSpaAndWellnessContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Delete</PageTitle>
@@ -57,7 +59,7 @@
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        service = await context.Service.FirstOrDefaultAsync(m => m.ServiceId == ServiceId);
+        service = await context.Service.FirstOrDefaultAsync(m => m.ServiceID == ServiceId);
 
         if (service is null)
         {

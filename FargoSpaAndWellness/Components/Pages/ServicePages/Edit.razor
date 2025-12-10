@@ -1,7 +1,9 @@
 ﻿@page "/services/edit"
-@using Microsoft.EntityFrameworkCore
+@using FargoSpaAndWellness.Data.Migrations
+@using FargoSpaAndWellness.Migrations.FargoSpaAndWellness
 @using FargoSpaAndWellness.Models
-@inject IDbContextFactory<FargoSpaAndWellness.Data.FargoSpaAndWellnessContext> DbFactory
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<FargoSpaAndWellnessContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Edit</PageTitle>
@@ -21,7 +23,7 @@ else
             <EditForm method="post" Model="Service" OnValidSubmit="UpdateService" FormName="edit" Enhance>
                 <DataAnnotationsValidator />
                 <ValidationSummary role="alert"/>
-                <input type="hidden" name="Service.ServiceId" value="@Service.ServiceId" />
+                <input type="hidden" name="Service.ServiceID" value="@Service.ServiceID" />
                 <div class="mb-3">
                     <label for="name" class="form-label">Name:</label>
                     <InputText id="name" @bind-Value="Service.Name" class="form-control" />
@@ -74,7 +76,7 @@ else
     protected override async Task OnInitializedAsync()
     {
         using var context = DbFactory.CreateDbContext();
-        Service ??= await context.Service.FirstOrDefaultAsync(m => m.ServiceId == ServiceId);
+        Service ??= await context.Service.FirstOrDefaultAsync(m => m.ServiceID == ServiceId);
 
         if (Service is null)
         {
@@ -95,7 +97,7 @@ else
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!ServiceExists(Service!.ServiceId))
+            if (!ServiceExists(Service!.ServiceID))
             {
                 NavigationManager.NavigateTo("notfound");
             }
@@ -111,6 +113,6 @@ else
     private bool ServiceExists(int serviceid)
     {
         using var context = DbFactory.CreateDbContext();
-        return context.Service.Any(e => e.ServiceId == serviceid);
+        return context.Service.Any(e => e.ServiceID == serviceid);
     }
 }
