@@ -1,7 +1,6 @@
 using FargoSpaAndWellness.Components;
 using FargoSpaAndWellness.Components.Account;
 using FargoSpaAndWellness.Data;
-using FargoSpaAndWellness.Data.Migrations;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

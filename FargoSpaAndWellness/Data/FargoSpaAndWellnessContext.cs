@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using FargoSpaAndWellness.Models;
 
-namespace FargoSpaAndWellness.Data.Migrations
+namespace FargoSpaAndWellness.Data
 {
     public class FargoSpaAndWellnessContext : DbContext
     {

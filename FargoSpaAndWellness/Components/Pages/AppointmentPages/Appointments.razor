@@ -1,7 +1,8 @@
 ﻿@page "/appointments/create"
-@using Microsoft.EntityFrameworkCore
+@using FargoSpaAndWellness.Data
 @using FargoSpaAndWellness.Models
-@inject IDbContextFactory<FargoSpaAndWellness.Data.Migrations.FargoSpaAndWellnessContext> DbFactory
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<FargoSpaAndWellnessContext> DbFactory
 @inject NavigationManager NavigationManager
 @rendermode InteractiveServer
 
@@ -52,7 +53,7 @@
 }
 
 @code {
-    private FargoSpaAndWellness.Data.Migrations.FargoSpaAndWellnessContext context = default!;
+    private FargoSpaAndWellnessContext context = default!;
     private List<Service> Services = new();
     private List<Employee> Employees = new();
 

@@ -1,10 +1,10 @@
 ﻿@page "/appointments"
-@using Microsoft.EntityFrameworkCore
-@using Microsoft.AspNetCore.Components.QuickGrid
+@using FargoSpaAndWellness.Data
 @using FargoSpaAndWellness.Models
-@using FargoSpaAndWellness.Data.Migrations
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Microsoft.EntityFrameworkCore
 @implements IAsyncDisposable
-@inject IDbContextFactory<FargoSpaAndWellness.Data.Migrations.FargoSpaAndWellnessContext> DbFactory
+@inject IDbContextFactory<FargoSpaAndWellnessContext> DbFactory
 
 <PageTitle>Index</PageTitle>
 
