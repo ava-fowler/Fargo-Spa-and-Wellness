@@ -1,7 +1,8 @@
 ﻿@page "/appointments/details"
-@using Microsoft.EntityFrameworkCore
+@using FargoSpaAndWellness.Data
 @using FargoSpaAndWellness.Models
-@inject IDbContextFactory<FargoSpaAndWellness.Data.Migrations.FargoSpaAndWellnessContext> DbFactory
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<FargoSpaAndWellnessContext> DbFactory
 @inject NavigationManager NavigationManager
 
 <PageTitle>Details</PageTitle>

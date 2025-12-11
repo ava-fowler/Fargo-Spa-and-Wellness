@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FargoSpaAndWellness.Models;
-using FargoSpaAndWellness.Data.Migrations;
 
 namespace FargoSpaAndWellness.Data;
 
